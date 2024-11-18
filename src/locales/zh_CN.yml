@@ -1,0 +1,4 @@
+commands:
+  message-guard:
+    messages:
+      alert: ❎ 检测到敏感词，谨防炸群！
