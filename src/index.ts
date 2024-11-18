@@ -43,6 +43,16 @@ export const Config: Schema<Config> = Schema.object({
   alert: Schema.boolean().description("是否提示").default(true),
 });
 
+function deepEqual(arr1: any[], arr2: any[]): boolean {
+  if (arr1.length !== arr2.length) return false;
+  for (let i = 0; i < arr1.length; i++) {
+    if (JSON.stringify(arr1[i]) !== JSON.stringify(arr2[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export function apply(
   ctx: Context,
   { mute, muteDuration, recall, alert }: Config
@@ -51,10 +61,8 @@ export function apply(
   const logger = ctx.logger("message-guard");
   ctx = ctx.platform("onebot").guild();
   ctx.middleware(async (session, next) => {
-    if (
-      session.elements !==
-      (await ctx.censor.transform(session.elements, session))
-    ) {
+    const transformedElements = await ctx.censor.transform(session.elements, session);
+    if (!deepEqual(session.elements, transformedElements)) {
       logger.info(`sesitive word detected: ${session.content}`);
       if (alert) {
         session.send(session.text("commands.message-guard.messages.alert"));
