@@ -1,0 +1,22 @@
+{
+  "name": "koishi-plugin-message-guard",
+  "description": "检测群友消息是否包含敏感词，如果有就撤回，避免炸群",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {},
+  "keywords": [
+    "chatbot",
+    "koishi",
+    "plugin"
+  ],
+  "devDependencies": {},
+  "peerDependencies": {
+    "koishi": "4.18.1"
+  }
+}
